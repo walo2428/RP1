@@ -3,7 +3,6 @@
 > BTS SIO option SISR — Session 2026  
 > **Talibi Omar** — Mediaschool IRIS Nice  
 > Période : 09/03/2026 au 20/03/2026  
-> Résultat : **0 erreur validée ✅**
 
 ---
 
@@ -160,17 +159,17 @@ Set-ExecutionPolicy Unrestricted -Force
 
 ## Résultats de déploiement
 
-`11_Verification_Serveur.ps1` — **0 erreur détectée ✅**
+`11_Verification_Serveur.ps1` — **0 erreur détectée **
 
-`12_Verification_Client.ps1` — **0 erreur sur tous les comptes testés ✅**
+`12_Verification_Client.ps1` — **0 erreur sur tous les comptes testés **
 
 | Compte | Type | H: | S: | P: | GPO | Résultat |
 |--------|------|----|-----|-----|-----|---------|
-| nbelloum | Etudiant SISR | OK | SISR | OK | Restrictions OK | ✅ |
-| jmarcucci | Etudiant SISR | OK | SISR | OK | Restrictions OK | ✅ |
-| yadidi | Etudiant SLAM | OK | SLAM | OK | Restrictions OK | ✅ |
-| ksenasson | Etudiant SLAM | OK | SLAM | OK | Restrictions OK | ✅ |
-| ybourquard | Professeur | OK | Profs | OK | Panneau OK | ✅ |
+| nbelloum | Etudiant SISR | OK | SISR | OK | Restrictions OK | 
+| jmarcucci | Etudiant SISR | OK | SISR | OK | Restrictions OK | 
+| yadidi | Etudiant SLAM | OK | SLAM | OK | Restrictions OK | 
+| ksenasson | Etudiant SLAM | OK | SLAM | OK | Restrictions OK | 
+| ybourquard | Professeur | OK | Profs | OK | Panneau OK | 
 
 ---
 
