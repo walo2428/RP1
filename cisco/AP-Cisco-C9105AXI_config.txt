@@ -1,0 +1,110 @@
+! ============================================================
+! Borne WiFi Cisco C9105AXI-E — AP-IRIS
+! Infrastructure IRIS Nice — RP-01
+! Talibi Omar — BTS SIO SISR — Session 2026
+! IP Management : 192.168.50.150
+! 2 SSIDs : IRIS-WiFi (WPA3-Enterprise 802.1X) + IRIS-Guest (ouvert VLAN 40)
+! ============================================================
+
+! === CONFIGURATION CONTROLLER (WLC ou IOS-XE mode autonome) ===
+
+hostname AP-IRIS
+
+! Interface management
+interface BVI1
+ ip address 192.168.50.150 255.255.255.0
+ no shutdown
+
+ip default-gateway 192.168.50.254
+
+! === SERVEUR RADIUS ===
+radius server SRV-DC01-NPS
+ address ipv4 192.168.50.10 auth-port 1812 acct-port 1813
+ key [SECRET_RADIUS]
+ timeout 5
+ retransmit 2
+
+aaa group server radius NPS-RADIUS
+ server name SRV-DC01-NPS
+
+aaa authentication dot1x default group NPS-RADIUS
+aaa authorization network default group NPS-RADIUS
+aaa accounting dot1x default start-stop group NPS-RADIUS
+
+! === SSID 1 — IRIS-WiFi (WPA3-Enterprise — authentification 802.1X) ===
+! VLAN par defaut : 99 (PRE-AUTH)
+! Apres auth NPS : VLAN 10 / 20 / 30 selon le groupe AD
+
+dot11 ssid IRIS-WiFi
+ vlan 99
+ authentication open eap NPS-RADIUS
+ authentication network-eap NPS-RADIUS
+ authentication key-management wpa version 2
+ mbssid guest-mode
+ dot11ax wpa3
+ ! VLAN dynamique selon reponse NPS (Tunnel-Pvt-Group-ID)
+ vlan-id dynamic
+
+! === SSID 2 — IRIS-Guest (ouvert — VLAN 40 fixe) ===
+! Pas d'authentification — Internet uniquement
+! Isolation clients activee (pas de communication inter-clients)
+
+dot11 ssid IRIS-Guest
+ vlan 40
+ authentication open
+ guest-mode
+ client-isolation all
+
+! === RADIO 2.4 GHz ===
+interface Dot11Radio0
+ description Radio-2.4GHz
+ encryption vlan 99 mode ciphers aes-ccm
+ ssid IRIS-WiFi
+ ssid IRIS-Guest
+ no shutdown
+
+! === RADIO 5 GHz ===
+interface Dot11Radio1
+ description Radio-5GHz-WiFi6
+ encryption vlan 99 mode ciphers aes-ccm
+ ssid IRIS-WiFi
+ ssid IRIS-Guest
+ no shutdown
+
+! === BRIDGE ENTRE RADIOS ET SWITCH ===
+interface Dot11Radio0.10
+ encapsulation dot1Q 10
+ bridge-group 10
+
+interface Dot11Radio0.20
+ encapsulation dot1Q 20
+ bridge-group 20
+
+interface Dot11Radio0.30
+ encapsulation dot1Q 30
+ bridge-group 30
+
+interface Dot11Radio0.40
+ encapsulation dot1Q 40
+ bridge-group 40
+
+interface Dot11Radio0.99
+ encapsulation dot1Q 99 native
+ bridge-group 99
+
+! === Syslog ===
+logging host 192.168.50.10
+logging trap informational
+
+! === SNMP ===
+snmp-server community iris-nice RO
+snmp-server host 192.168.50.10 version 2c iris-nice
+
+end
+
+! ============================================================
+! RECAPITULATIF
+! IRIS-WiFi  : WPA3-Enterprise — 802.1X — NPS 192.168.50.10
+!              VLAN 99 par defaut -> VLAN 10/20/30 apres auth
+! IRIS-Guest : Ouvert — VLAN 40 fixe — isolation clients
+! ============================================================

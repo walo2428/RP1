@@ -1,0 +1,79 @@
+========================================
+   VERIFICATION FINALE - SRV-DC01
+========================================
+
+[1] RESEAU
+[OK] IP 192.168.50.10 sur Ethernet 2
+[OK] NAT internet : 10.0.2.15
+
+[2] ACTIVE DIRECTORY
+[OK] Domaine : iris.local | Mode : Windows2016Domain
+[OK] 21 comptes utilisateurs
+[OK] Groupe GRP-Etudiants-SISR present
+[OK] Groupe GRP-Etudiants-SLAM present
+[OK] Groupe GRP-Professeurs present
+[OK] Groupe GRP-Administration present
+[OK] Groupe GRP-WiFi-SISR present
+[OK] Groupe GRP-WiFi-Profs present
+[OK] Groupe GRP-WiFi-Admin present
+[OK] Groupe GRP-Informatique present
+[OK] Groupe GRP-VPN-Users present
+
+[3] DNS
+[OK] Zone iris.local
+[OK] Zone inverse 50.168.192
+[OK] Forwarders : 1.1.1.1, 8.8.8.8
+
+[4] DHCP
+[OK] Service DHCP actif
+[OK] 5 scopes actifs
+[--]   VLAN10-Etudiants : 192.168.10.0 [Active]
+[--]   VLAN20-Professeurs : 192.168.20.0 [Active]
+[--]   VLAN30-Administration : 192.168.30.0 [Active]
+[--]   VLAN40-Guest : 192.168.40.0 [Active]
+[--]   VLAN99-PreAuth : 192.168.99.0 [Active]
+
+[5] PARTAGES SMB
+[OK] Partage SISR -> C:\Partages\Etudiants-SISR
+[OK] Partage SLAM -> C:\Partages\Etudiants-SLAM
+[OK] Partage Professeurs -> C:\Partages\Professeurs
+[OK] Partage Administration -> C:\Partages\Administration
+[OK] Partage Commun -> C:\Partages\Commun
+[OK] Partage HomeDir$ -> C:\HomeDir
+[OK] 21 HomeDirs presents
+[OK] HomeDir$ accessible aux utilisateurs du domaine
+
+[6] ACL HOMEDIRS
+[OK] ACL correctes sur les 21 HomeDirs
+
+[7] GPO
+[OK] GPO IRIS-PasswordPolicy active
+[OK] GPO IRIS-Restrictions-Etudiants active
+[OK] GPO IRIS-LecteursReseau active
+[OK] GPO IRIS-Securite-Baseline active
+[OK] GPO IRIS-Profs-Acces active
+[OK] 6 mappages lecteurs dans GPO Preferences
+
+[8] ADCS - CA
+[OK] CA IRIS-Nice-CA operationnelle
+[OK] Template RASAndIASServer actif
+
+[9] CERTIFICATS
+[OK] Certificat NPS valide jusqu'au 18/04/2027
+
+[10] NPS RADIUS
+[OK] Service NPS actif
+[OK] 3 clients RADIUS (SW, AP, Routeur)
+[OK] Politique NPS IRIS_WiFi_Etudiants -> VLAN 10
+[OK] Politique NPS IRIS_WiFi_Professeurs -> VLAN 20
+[OK] Politique NPS IRIS_WiFi_Administration -> VLAN 30
+
+[11] POSTES CLIENTS
+[OK] Poste SISR-01 joint au domaine
+
+========================================
+   BILAN FINAL SRV-DC01
+========================================
+INFRASTRUCTURE IRIS NICE - COMPLETE !
+0 erreur detectee.
+========================================

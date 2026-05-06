@@ -1,0 +1,131 @@
+========================================
+   TEST CLIENT - nbelloum
+========================================
+
+[1] IDENTITE
+[OK] Utilisateur : nbelloum
+[OK] Domaine     : IRIS
+[OK] Connecte au domaine IRIS
+
+[2] GROUPES AD
+[OK] Groupes trouves :
+[--]   -> GRP-WiFi-SISR
+[--]   -> GRP-Etudiants-SISR
+
+[3] CONNECTIVITE SRV-DC01
+[OK] SRV-DC01 accessible (SMB port 445)
+[OK] DNS resout SRV-DC01.iris.local
+
+[4] LECTEURS RESEAU
+[OK] H: mappe -> \\SRV-DC01\HomeDir$\nbelloum
+[OK] S: mappe -> SISR
+[OK] P: mappe -> Commun
+
+[5] ACCES AUX PARTAGES
+[OK] H: lecture/ecriture OK
+[OK] S: accessible en lecture
+[OK] P: accessible en lecture
+
+[6] GPO RESTRICTIONS
+[OK] Panneau config bloque (GPO Restrictions)
+[OK] CMD bloquee (GPO Restrictions)
+[OK] Regedit bloque (GPO Restrictions)
+
+[7] SECURITE BASELINE
+[OK] Ecran de veille active (GPO Baseline)
+[OK] Ecran de veille protege par mot de passe
+
+========================================
+   BILAN - nbelloum
+========================================
+TOUT EST OK POUR NBELLOUM !
+========================================
+
+---
+
+========================================
+   TEST CLIENT - ksenasson
+========================================
+
+[1] IDENTITE
+[OK] Utilisateur : Ksenasson
+[OK] Domaine     : IRIS
+[OK] Connecte au domaine IRIS
+
+[2] GROUPES AD
+[OK] Groupes trouves :
+[--]   -> GRP-WiFi-SISR
+[--]   -> GRP-Etudiants-SLAM
+
+[3] CONNECTIVITE SRV-DC01
+[OK] SRV-DC01 accessible (SMB port 445)
+[OK] DNS resout SRV-DC01.iris.local
+
+[4] LECTEURS RESEAU
+[OK] H: mappe -> \\SRV-DC01\HomeDir$\Ksenasson
+[OK] S: mappe -> SLAM
+[OK] P: mappe -> Commun
+
+[5] ACCES AUX PARTAGES
+[OK] H: lecture/ecriture OK
+[OK] S: accessible en lecture
+[OK] P: accessible en lecture
+
+[6] GPO RESTRICTIONS
+[OK] Panneau config bloque
+[OK] CMD bloquee
+[OK] Regedit bloque
+
+[7] SECURITE BASELINE
+[OK] Ecran de veille active
+[OK] Ecran de veille protege par mot de passe
+
+========================================
+   BILAN - Ksenasson
+========================================
+TOUT EST OK POUR KSENASSON !
+========================================
+
+---
+
+========================================
+   TEST CLIENT - ybourquard
+========================================
+
+[1] IDENTITE
+[OK] Utilisateur : ybourquard
+[OK] Domaine     : IRIS
+[OK] Connecte au domaine IRIS
+
+[2] GROUPES AD
+[OK] Groupes trouves :
+[--]   -> GRP-WiFi-Profs
+[--]   -> GRP-Professeurs
+
+[3] CONNECTIVITE SRV-DC01
+[OK] SRV-DC01 accessible (SMB port 445)
+[OK] DNS resout SRV-DC01.iris.local
+
+[4] LECTEURS RESEAU
+[OK] H: mappe -> \\SRV-DC01\HomeDir$\ybourquard
+[OK] S: mappe -> Professeurs
+[OK] P: mappe -> Commun
+
+[5] ACCES AUX PARTAGES
+[OK] H: lecture/ecriture OK
+[OK] S: accessible en lecture
+[OK] P: accessible en lecture
+
+[6] GPO RESTRICTIONS
+[OK] Panneau config accessible (prof - GPO Profs-Acces)
+[--] Restrictions etudiants non appliquees (normal pour un prof)
+
+[7] SECURITE BASELINE
+[OK] Ecran de veille active
+[OK] Ecran de veille protege par mot de passe
+
+========================================
+   BILAN - ybourquard
+========================================
+TOUT EST OK POUR YBOURQUARD !
+========================================

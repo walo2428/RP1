@@ -1,0 +1,107 @@
+! ============================================================
+! Routeur Cisco 1941W — R1-IRIS
+! Infrastructure IRIS Nice — RP-01
+! Talibi Omar — BTS SIO SISR — Session 2026
+! IP Management : 192.168.50.254
+! ============================================================
+
+hostname R1-IRIS
+
+! Interface WAN (Internet)
+interface GigabitEthernet0/1
+ description WAN-Internet
+ ip address dhcp
+ ip nat outside
+ no shutdown
+
+! Interface LAN (trunk 802.1Q vers SW-IRIS)
+interface GigabitEthernet0/0
+ description LAN-Trunk-vers-SW-IRIS
+ no shutdown
+
+! VLAN 10 - Etudiants SISR + SLAM
+interface GigabitEthernet0/0.10
+ description VLAN10-Etudiants
+ encapsulation dot1Q 10
+ ip address 192.168.10.254 255.255.255.0
+ ip helper-address 192.168.50.10
+ ip nat inside
+ no shutdown
+
+! VLAN 20 - Professeurs
+interface GigabitEthernet0/0.20
+ description VLAN20-Professeurs
+ encapsulation dot1Q 20
+ ip address 192.168.20.254 255.255.255.0
+ ip helper-address 192.168.50.10
+ ip nat inside
+ no shutdown
+
+! VLAN 30 - Administration
+interface GigabitEthernet0/0.30
+ description VLAN30-Administration
+ encapsulation dot1Q 30
+ ip address 192.168.30.254 255.255.255.0
+ ip helper-address 192.168.50.10
+ ip nat inside
+ no shutdown
+
+! VLAN 40 - Guest (Internet uniquement)
+interface GigabitEthernet0/0.40
+ description VLAN40-Guest
+ encapsulation dot1Q 40
+ ip address 192.168.40.254 255.255.255.0
+ ip helper-address 192.168.50.10
+ ip nat inside
+ no shutdown
+
+! VLAN 50 - Management (IPs fixes - pas de relay DHCP)
+interface GigabitEthernet0/0.50
+ description VLAN50-Management
+ encapsulation dot1Q 50
+ ip address 192.168.50.254 255.255.255.0
+ ip nat inside
+ no shutdown
+
+! VLAN 99 - PRE-AUTH (VLAN par defaut avant 802.1X)
+interface GigabitEthernet0/0.99
+ description VLAN99-PreAuth
+ encapsulation dot1Q 99 native
+ ip address 192.168.99.254 255.255.255.0
+ ip helper-address 192.168.50.10
+ ip nat inside
+ no shutdown
+
+! NAT - translation vers Internet
+access-list 100 permit ip 192.168.10.0 0.0.0.255 any
+access-list 100 permit ip 192.168.20.0 0.0.0.255 any
+access-list 100 permit ip 192.168.30.0 0.0.0.255 any
+access-list 100 permit ip 192.168.40.0 0.0.0.255 any
+access-list 100 permit ip 192.168.50.0 0.0.0.255 any
+access-list 100 permit ip 192.168.99.0 0.0.0.255 any
+ip nat inside source list 100 interface GigabitEthernet0/1 overload
+
+! RADIUS pour NPS
+aaa new-model
+radius-server host 192.168.50.10 auth-port 1812 acct-port 1813 key [SECRET_RADIUS]
+
+! Journaux syslog vers SRV-DC01
+logging host 192.168.50.10
+logging source-interface GigabitEthernet0/0.50
+logging trap informational
+service timestamps log datetime msec
+
+! Supervision SNMP
+snmp-server community iris-nice RO
+snmp-server host 192.168.50.10 version 2c iris-nice
+
+! Acces SSH
+ip domain-name iris.local
+crypto key generate rsa modulus 2048
+ip ssh version 2
+username admin privilege 15 secret [MOT_DE_PASSE_ADMIN]
+line vty 0 4
+ transport input ssh
+ login local
+
+end

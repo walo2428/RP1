@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fichier GPO Preferences - Mappages de lecteurs reseau
+  GPO : IRIS-LecteursReseau
+  Projet : RP-01 IRIS Nice
+  Auteur : Talibi Omar - BTS SIO SISR 2026
+
+  NOTE : Les SIDs dans les FilterGroup sont specifiques a l'AD du projet.
+  Si vous re-deploiement ce projet sur un nouvel AD, relancer le script
+  09_GPO_Lecteurs.ps1 qui regenere ce fichier avec les bons SIDs.
+
+  Ce fichier est un EXEMPLE. Le vrai fichier est dans :
+  C:\Windows\SYSVOL\sysvol\iris.local\Policies\{GUID-GPO}\User\Preferences\Drives\
+-->
+<Drives clsid="{8FDDCC1A-0C3C-43cd-A6B4-71A6DF20DA8C}">
+
+  <!-- H: HomeDir personnel - pour TOUS les utilisateurs (pas de filtre) -->
+  <Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}"
+         name="H:" status="H:" image="2" changed="2026-04-24 10:00:00"
+         uid="{GUID-GENERE-PAR-SCRIPT-09}" bypassErrors="1">
+    <Properties action="U" thisDrive="SHOW" allDrives="SHOW"
+                userName="" path="\\SRV-DC01\HomeDir$\%USERNAME%"
+                label="HomeDir" persistent="1" useLetter="1" letter="H"/>
+  </Drive>
+
+  <!-- S: SISR - uniquement pour GRP-Etudiants-SISR -->
+  <Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}"
+         name="S:" status="S:" image="2" changed="2026-04-24 10:00:00"
+         uid="{GUID-GENERE-PAR-SCRIPT-09}" bypassErrors="1">
+    <Properties action="U" thisDrive="SHOW" allDrives="SHOW"
+                userName="" path="\\SRV-DC01\SISR"
+                label="SISR" persistent="1" useLetter="1" letter="S"/>
+    <Filters>
+      <FilterGroup bool="AND" not="0" name="IRIS\GRP-Etudiants-SISR"
+                   sid="[SID-GRP-Etudiants-SISR]" userContext="1" primaryGroup="0" localGroup="0"/>
+    </Filters>
+  </Drive>
+
+  <!-- S: SLAM - uniquement pour GRP-Etudiants-SLAM -->
+  <Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}"
+         name="S:" status="S:" image="2" changed="2026-04-24 10:00:00"
+         uid="{GUID-GENERE-PAR-SCRIPT-09}" bypassErrors="1">
+    <Properties action="U" thisDrive="SHOW" allDrives="SHOW"
+                userName="" path="\\SRV-DC01\SLAM"
+                label="SLAM" persistent="1" useLetter="1" letter="S"/>
+    <Filters>
+      <FilterGroup bool="AND" not="0" name="IRIS\GRP-Etudiants-SLAM"
+                   sid="[SID-GRP-Etudiants-SLAM]" userContext="1" primaryGroup="0" localGroup="0"/>
+    </Filters>
+  </Drive>
+
+  <!-- S: Professeurs - uniquement pour GRP-Professeurs -->
+  <Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}"
+         name="S:" status="S:" image="2" changed="2026-04-24 10:00:00"
+         uid="{GUID-GENERE-PAR-SCRIPT-09}" bypassErrors="1">
+    <Properties action="U" thisDrive="SHOW" allDrives="SHOW"
+                userName="" path="\\SRV-DC01\Professeurs"
+                label="Professeurs" persistent="1" useLetter="1" letter="S"/>
+    <Filters>
+      <FilterGroup bool="AND" not="0" name="IRIS\GRP-Professeurs"
+                   sid="[SID-GRP-Professeurs]" userContext="1" primaryGroup="0" localGroup="0"/>
+    </Filters>
+  </Drive>
+
+  <!-- A: Administration - uniquement pour GRP-Administration -->
+  <Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}"
+         name="A:" status="A:" image="2" changed="2026-04-24 10:00:00"
+         uid="{GUID-GENERE-PAR-SCRIPT-09}" bypassErrors="1">
+    <Properties action="U" thisDrive="SHOW" allDrives="SHOW"
+                userName="" path="\\SRV-DC01\Administration"
+                label="Administration" persistent="1" useLetter="1" letter="A"/>
+    <Filters>
+      <FilterGroup bool="AND" not="0" name="IRIS\GRP-Administration"
+                   sid="[SID-GRP-Administration]" userContext="1" primaryGroup="0" localGroup="0"/>
+    </Filters>
+  </Drive>
+
+  <!-- P: Commun - pour SISR OU SLAM OU Professeurs -->
+  <Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}"
+         name="P:" status="P:" image="2" changed="2026-04-24 10:00:00"
+         uid="{GUID-GENERE-PAR-SCRIPT-09}" bypassErrors="1">
+    <Properties action="U" thisDrive="SHOW" allDrives="SHOW"
+                userName="" path="\\SRV-DC01\Commun"
+                label="Commun" persistent="1" useLetter="1" letter="P"/>
+    <Filters>
+      <FilterGroup bool="AND" not="0" name="IRIS\GRP-Etudiants-SISR"
+                   sid="[SID-GRP-Etudiants-SISR]" userContext="1" primaryGroup="0" localGroup="0"/>
+      <FilterGroup bool="OR" not="0" name="IRIS\GRP-Etudiants-SLAM"
+                   sid="[SID-GRP-Etudiants-SLAM]" userContext="1" primaryGroup="0" localGroup="0"/>
+      <FilterGroup bool="OR" not="0" name="IRIS\GRP-Professeurs"
+                   sid="[SID-GRP-Professeurs]" userContext="1" primaryGroup="0" localGroup="0"/>
+    </Filters>
+  </Drive>
+
+</Drives>

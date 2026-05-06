@@ -1,0 +1,27 @@
+# Fichiers sensibles - ne jamais commiter
+.env
+credentials.txt
+*_credentials.md
+*passwords*
+*mots_de_passe*
+*secret*
+
+# Exports NPS (contiennent secrets RADIUS en clair)
+NPS_*.xml
+NPS_Config.xml
+
+# Fichiers systeme Windows
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Fichiers temporaires
+*.tmp
+*.log
+*.bak
+*.old
+
+# Dossiers systeme
+__pycache__/
+.DS_Store
+node_modules/
